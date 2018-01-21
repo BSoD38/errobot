@@ -1,10 +1,10 @@
 {
     "name": "errobot",
-    "version": "0.0.1",
+    "version": "0.2.0",
     "description": "Hello World!",
     "main": "bot.js",
     "author": "BSoD",
     "dependencies": {
-        "discord.io": "^2.5.3"
+        "discord.io": "github:woor/discord.io#gateway_v6"
     }
 }
