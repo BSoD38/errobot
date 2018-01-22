@@ -7,11 +7,31 @@ module.exports = {
                 return user;
             }
         }
-        bot.sendMessage({
-            to: channelID,
-            message: "Utilisateur non trouvé :("
-        });
         return null;
+    },
+
+    getUsersByMultipleIDs: function (bot, channelID){
+        res = new Array(0);
+        Array.from(arguments).slice(2).forEach(function(query){
+            for(var user in bot.servers[bot.channels[channelID].guild_id].members){
+                if(user == query){
+                    res.push(user);
+                } else {
+                    res.push(null);
+                }
+            }
+        });
+        return res;
+    },
+
+    mentionToID: function(str){
+        if(str.substr(0,2) == "<@!"){
+            return str.substr(3, str.length - 2);
+        } else if (str.substr(0,1) == "<@"){
+            return str.substr(2, str.length - 2);
+        } else {
+            return null;
+        }
     },
 
     textToEmoji: function(text){

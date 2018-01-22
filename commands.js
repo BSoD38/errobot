@@ -10,18 +10,44 @@ module.exports = {
     },
 
     //Sends an insult to the targeted user.
-    insult: function(bot, channelID, command, senderName) {
-        var target = functions.getUserByID(bot, channelID, command[1].substr(2, command[1].length - 3));
-        if(target != null){
+    insult: function(bot, channelID, senderName) {
+        if (arguments.length == 3){
+            bot.sendMessage({
+                to: channelID,
+                message: "Syntaxe de insult :\n`e!insult [[@pseudo] [@...]]`"
+            });
+            return;
+        } else if(command.length == 4) {
+            functions.getUserByID(bot, channelID, arguments[3])
             bot.sendMessage({
                 to: channelID,
                 message: "<@" + target + "> t'es qu'un sale con.\n-" + senderName + "."
             });
-        }
-        else if (command.length == 1){
+        } else {
+            var names = new Array(0);
+            for(var i=3; i < arguments.length - 1; i++){
+                names.push(arguments[i]);
+            }
+
+            var ids = functions.getUsersByMultipleIDs(bot, channelID, names);
+            for(var id in ids){
+                if(id == null){
+                    bot.sendMessage({
+                        to: channelID,
+                        message: "Un des utilisateurs ciblés n'existe pas !"
+                    });
+                    return;
+                }
+            }
+        
+            var reply = "";
+            for(var id in ids){
+                reply += "<@" + id + ">, ";
+            }
+            if()
             bot.sendMessage({
                 to: channelID,
-                message: "Syntaxe de insult :\n`e!insult [@pseudo]`"
+                message: "<@" + target + "> t'es qu'un sale con.\n-" + senderName + "."
             });
         }
     },
